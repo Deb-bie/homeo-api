@@ -1,4 +1,5 @@
 const express = require("express")
+const cors = require("cors")
 const { connectDB } = require("./db/config")
 const dotenv = require("dotenv").config()
 const PORT = process.env.PORT
@@ -9,16 +10,27 @@ const app = express()
 
 
 
+// in order to post data in json
+app.use(cors())
+app.use(express.json()); 
+
 // ROUTES
 app.use("/api/categories", require("./routes/categories"));
-app.use("/api/auth", require("./routes/auth"));
-app.use("/api/beds", require("./routes/beds"));
-app.use("/api/couches", require("./routes/couches"));
-app.use("/api/diningsets", require("./routes/dining-sets"));
-app.use("/api/tables", require("./routes/tables"));
-app.use("/api/users", require("./routes/users"));
+app.use("/api/products", require("./routes/products"))
 
 
+// error handling midddleware
+
+app.use((err,req,res,next) => {
+    const errorStatus = err.status || 500
+    const errorMessage = err.message || "Something went wrong"
+    return res.status(500).json({
+        success:false,
+        status: errorStatus,
+        message: errorMessage,
+        stack: err.stack
+    })
+})
 
 
 app.listen(PORT, () => {

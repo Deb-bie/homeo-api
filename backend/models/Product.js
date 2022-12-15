@@ -1,26 +1,20 @@
-const mongoose = required("mongoose")
+const mongoose = require("mongoose")
 
 const ProductSchema = new mongoose.Schema(
     {
         name: {
             type: String,
             required: true,
-            unique: true
-        },
-        title: {
-            type: String,
-            required: true,
-            unique: true
-        },
-        image:{
-            type: String,
-            required: true
         },
         description: {
             type: String,
             required: true
         },
-        inStock: {
+        category: {
+            type: String,
+            required: true
+        },
+        stock: {
             type: Number,
             required: true
         },
@@ -28,16 +22,20 @@ const ProductSchema = new mongoose.Schema(
             type: Number,
             required: true
         },
-        discount: {
-            type: Number,
-            default: 0
+        availability: {
+            type: String,
+            required: true 
         },
         additionalInformation: {
             type: String
         },
-        category: {
+        image:{
             type: String,
-            required: true
+            // required: true
+        },
+        featured: {
+            type: Boolean,
+            default: false
         }
     },
     {
